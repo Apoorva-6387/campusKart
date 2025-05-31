@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<nav class="navbar">
+  <div class="logo">CampusKart</div>
+  <div class="hamburger" id="hamburgerBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="home.html"><i class="fas fa-home"></i> <span>Home</span></a>
+    <a href="buy.html"><i class="fas fa-shopping-cart"></i> <span>Buy</span></a>
+    <a href="sell.html"><i class="fas fa-tag"></i> <span>Sell</span></a>
+    <a href="events.html"><i class="fas fa-calendar-alt"></i> <span>Events</span></a>
+    <a href="help.html"><i class="fas fa-users"></i> <span>Team Up</span></a>
+    <a href="messages.html"><i class="fas fa-envelope"></i> <span>Messages</span></a>
+    <a href="profile.html"><i class="fas fa-user"></i> <span>Profile</span></a>
+    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    background: linear-gradient(90deg, #6e00ff, #a17aff);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-links a:hover {
+    background-color: rgba(255,255,255,0.2);
+  }
+
+  .nav-links i {
+    font-size: 17px;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    width: 28px;
+    height: 24px;
+    justify-content: space-between;
+    margin-left: 20px;
+  }
+  .hamburger span {
+    display: block;
+    height: 4px;
+    background: white;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  @media (max-width: 900px) {
+    .navbar {
+      padding: 12px 10px;
+    }
+    .logo {
+      font-size: 18px;
+    }
+    .nav-links a {
+      font-size: 14px;
+      margin-left: 10px;
+      padding: 7px 8px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: linear-gradient(90deg, #6e00ff, #a17aff);
+      flex-direction: column;
+      width: 180px;
+      align-items: flex-start;
+      padding: 20px 0 20px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .nav-links.active {
+      display: flex;
+    }
+    .nav-links a {
+      margin: 10px 0;
+      width: 100%;
+    }
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("campuskart_user");
+        window.location.href = "auth.html";
+      });
+    }
+
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const navLinks = document.getElementById("navLinks");
+    if (hamburgerBtn && navLinks) {
+      hamburgerBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    }
+  });
+</script>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy - CampusKart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6e00ff;
+      --primary-light: #a17aff;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --success: #00c853;
+      --danger: #dc3545;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    #navbar {
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .filter-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    .filter-group input,
+    .filter-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .filter-group input:focus,
+    .filter-group select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(110, 0, 255, 0.1);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      color: var(--dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .card-college {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .card-category {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5a00d6;
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .contact-details {
+      margin-top: 10px;
+      padding: 15px;
+      background: rgba(110, 0, 255, 0.05);
+      border-radius: 8px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .contact-details p {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-details a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-details a:hover {
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 20px;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 1.1rem;
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 768px) {
+      .cards {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .filters {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-img {
+        height: 160px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <div class="container">
+    <h2><i class="fas fa-shopping-bag"></i> Browse Items</h2>
+    
+    <div class="filters">
+      <div class="filter-group">
+        <label for="searchBar"><i class="fas fa-search"></i> Search</label>
+        <input type="text" id="searchBar" placeholder="Search items...">
+      </div>
+      
+      <div class="filter-group">
+        <label for="filterCategory"><i class="fas fa-tag"></i> Category</label>
+        <select id="filterCategory">
+          <option value="">All Categories</option>
+          <option value="Books">Books</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filterCollege"><i class="fas fa-university"></i> College</label>
+        <select id="filterCollege">
+          <option value="">All Colleges</option>
+          <option value="IIIT Bhagalpur">IIIT Bhagalpur</option>
+          <option value="IIT Kanpur">IIT Kanpur</option>
+          <option value="IIT Patna">IIT Patna</option>
+          <option value="IIT Bombay">IIT Bombay</option>
+          <option value="IIT Madras">IIT Madras</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="filterPrice"><i class="fas fa-rupee-sign"></i> Max Price</label>
+        <input type="number" id="filterPrice" placeholder="Enter max price">
+      </div>
+    </div>
+
+    <div id="productList" class="cards">
+      <div class="no-results">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading products...</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="itemModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+ 
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => document.getElementById('navbar').innerHTML = html);
+
+    let allProducts = [];
+    const user = JSON.parse(localStorage.getItem("campuskart_user")) || {};
+
+    const searchInput = document.getElementById('searchBar');
+    const categorySelect = document.getElementById('filterCategory');
+    const collegeSelect = document.getElementById('filterCollege');
+    const priceInput = document.getElementById('filterPrice');
+    const productList = document.getElementById('productList');
+    const itemModal = document.getElementById('itemModal');
+    const modalContent = document.getElementById('modalContent');
+
+    searchInput.addEventListener('input', filterProducts);
+    categorySelect.addEventListener('change', filterProducts);
+    collegeSelect.addEventListener('change', filterProducts);
+    priceInput.addEventListener('input', filterProducts);
+
+    async function loadItems() {
+      try {
+        const res = await fetch('/api/products/all');
+        allProducts = await res.json();
+        filterProducts();
+      } catch (err) {
+        console.error("Error loading products:", err);
+        productList.innerHTML = `
+          <div class="no-results">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>Error loading products. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    function filterProducts() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const category = categorySelect.value;
+      const college = collegeSelect.value;
+      const maxPrice = priceInput.value ? parseFloat(priceInput.value) : null;
+
+      const filtered = allProducts.filter(product => {
+  const title = product.title ? product.title.toLowerCase() : '';
+  const description = product.description ? product.description.toLowerCase() : '';
+  const categoryMatch = category === '' || product.category === category;
+  const collegeMatch = college === '' || product.college === college;
+  const priceMatch = maxPrice === null || product.price <= maxPrice;
+
+  return (
+    (title.includes(searchTerm) || description.includes(searchTerm)) &&
+    categoryMatch &&
+    collegeMatch &&
+    priceMatch
+  );
+});
+
+
+
+      displayProducts(filtered);
+    }
+
+    function displayProducts(products) {
+      if (products.length === 0) {
+        productList.innerHTML = `
+          <div class="no-results">
+            <i class="fas fa-search"></i>
+            <p>No products found matching your criteria</p>
+          </div>
+        `;
+        return;
+      }
+
+      productList.innerHTML = products.map(product => `
+        <div class="card">
+          <div class="card-img-container" onclick="showItemModal('${product._id}')">
+            <img src="/uploads/${product.image}" class="card-img" alt="${product.title}">
+          </div>
+          <div class="card-content">
+            <div class="card-category">${product.category || 'General'}</div>
+            <h3 onclick="showItemModal('${product._id}')">${product.title}</h3>
+            <div class="card-price">₹${product.price}</div>
+            <div class="card-college">${product.college}</div>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="showItemModal('${product._id}')">
+                <i class="fas fa-info-circle"></i> Details
+              </button>
+              <button class="btn btn-secondary" onclick="event.stopPropagation(); showContact('${product._id}', this)">
+                <i class="fas fa-phone"></i> Contact
+              </button>
+            </div>
+            <div class="contact-details" id="contact-${product._id}"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showContact(id, button) {
+      const product = allProducts.find(p => p._id === id);
+      if (!product) return;
+
+      const contactDiv = document.getElementById("contact-" + id);
+
+      if (contactDiv.style.display === 'block') {
+        contactDiv.style.display = 'none';
+        button.innerHTML = '<i class="fas fa-phone"></i> Contact';
+      } else {
+        contactDiv.innerHTML = `
+          <p><i class="fas fa-user"></i> <strong>${product.sellerName || 'Seller'}</strong></p>
+          <p><i class="fas fa-phone"></i> <a href="tel:${product.phone || 'Not available'}">${product.phone || 'Not available'}</a></p>
+          <p><i class="fas fa-envelope"></i> <a href="mailto:${product.email || ''}">${product.email || 'Not available'}</a></p>
+          <p><i class="fas fa-comment"></i> <a href="chat.html?id=${product.user}" style="color: var(--primary);">Start Chat</a></p>
+        `;
+        contactDiv.style.display = "block";
+        button.innerHTML = '<i class="fas fa-times"></i> Close';
+      }
+    }
+
+    function showItemModal(id) {
+      const product = allProducts.find(p => p._id === id);
+      if (!product) return;
+
+      modalContent.innerHTML = `
+        <img src="/uploads/${product.image}" style="width:100%; max-height:300px; object-fit:contain; border-radius:8px; margin-bottom:15px;">
+        <h2>${product.title}</h2>
+        <div style="display:flex; justify-content:space-between; margin:10px 0;">
+          <span style="font-size:1.5rem; color:var(--primary); font-weight:600;">₹${product.price}</span>
+          <span style="background:#f0f0f0; padding:5px 10px; border-radius:20px;">${product.category || 'General'}</span>
+        </div>
+        <p><i class="fas fa-university"></i> ${product.college}</p>
+        <p><i class="fas fa-user"></i> ${product.sellerName || 'Seller'}</p>
+        <hr style="margin:15px 0; border-color:#eee;">
+        <h3>Description</h3>
+        <p>${product.description || 'No description provided'}</p>
+        <div style="margin-top:20px; display:flex; gap:10px;">
+          <a href="chat.html?id=${product.user}" class="btn btn-primary" style="flex:1; text-align:center;">
+            <i class="fas fa-comment"></i> Chat with Seller
+          </a>
+          <a href="tel:${product.phone || ''}" class="btn btn-secondary" style="flex:1; text-align:center;">
+            <i class="fas fa-phone"></i> Call Seller
+          </a>
+        </div>
+      `;
+      itemModal.style.display = "flex";
+      document.body.style.overflow = "hidden"; 
+    }
+
+    function closeModal() {
+      itemModal.style.display = "none";
+      document.body.style.overflow = "auto"; 
+    }
+
+    window.addEventListener('click', (e) => {
+      if (e.target === itemModal) {
+        closeModal();
+      }
+    });
+
+    loadItems();
+  </script>
+</body>
+</html>

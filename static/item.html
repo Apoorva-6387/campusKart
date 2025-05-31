@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Item Details - CampusKart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <div class="container" id="itemContainer"></div>
+
+  <script>
+    fetch('navbar.html').then(res => res.text()).then(html => {
+      document.getElementById('navbar').innerHTML = html;
+    });
+
+    const id = new URLSearchParams(window.location.search).get('id');
+    const container = document.getElementById("itemContainer");
+
+    async function loadItem() {
+      const res = await fetch(`/api/products/${id}`);
+      const item = await res.json();
+      container.innerHTML = `
+        <h2>${item.title}</h2>
+        <img src="/uploads/${item.image}" style="max-width: 300px; border-radius: 10px;">
+        <p><strong>Price:</strong> ₹${item.price}</p>
+        <p><strong>Category:</strong> ${item.category}</p>
+        <p><strong>Condition:</strong> ${item.condition}</p>
+        <p><strong>Usage:</strong> ${item.usageTime}</p>
+        <p><strong>Seller College:</strong> ${item.college}</p>
+        <p><strong>Contact:</strong> <a href="tel:${item.phone}">${item.phone}</a></p>
+      `;
+    }
+
+    loadItem();
+  </script>
+</body>
+</html>

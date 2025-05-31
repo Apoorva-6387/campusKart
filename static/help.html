@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Team Up - CampusKart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6e00ff;
+      --primary-light: #a17aff;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --success: #00c853;
+      --danger: #dc3545;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    #navbar {
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #helpForm {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+
+    #helpForm input,
+    #helpForm textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    #helpForm input:focus,
+    #helpForm textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(110, 0, 255, 0.1);
+    }
+
+    #helpForm textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    #helpForm button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #helpForm button:hover {
+      background: #5a00d6;
+      transform: translateY(-2px);
+    }
+
+    .file-input-container {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .file-input-label {
+      display: block;
+      padding: 12px 15px;
+      background: #f5f7ff;
+      border: 1px dashed #a17aff;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .file-input-label:hover {
+      background: #e8e0ff;
+    }
+
+    .file-input-label i {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+
+    #helpForm input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .filters {
+      margin-bottom: 25px;
+    }
+
+    #helpSearch {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236e00ff' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 15px center;
+      padding-left: 45px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    #helpSearch:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(110, 0, 255, 0.1);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .card-college {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .card-user {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .card-user i {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 1.1rem;
+      grid-column: 1 / -1;
+    }
+
+    .no-results i {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: var(--primary-light);
+    }
+
+    @media (max-width: 768px) {
+      .cards {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      #helpForm {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <div class="container">
+    <h2><i class="fas fa-users"></i> Need Teammates / Help?</h2>
+
+    <form id="helpForm" enctype="multipart/form-data">
+      <input type="text" name="title" placeholder="Project/Hackathon Name" required />
+      <input type="text" name="college" placeholder="College Name" required />
+      <textarea name="description" placeholder="Describe what help you need (skills required, timeline, etc.)" required></textarea>
+      
+      <div class="file-input-container">
+        <label class="file-input-label">
+          <i class="fas fa-image"></i> 
+          <span id="file-label-text">Upload Project Image (Optional)</span>
+        </label>
+        <input type="file" name="image" accept="image/*" id="fileInput" />
+      </div>
+      
+      <button type="submit"><i class="fas fa-bullhorn"></i> Post Request</button>
+    </form>
+
+    <div class="filters">
+      <input type="text" id="helpSearch" placeholder="Search projects or colleges..." />
+    </div>
+
+    <div id="helpList" class="cards">
+      <div class="no-results">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading requests...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(html => { document.getElementById('navbar').innerHTML = html; });
+
+    const user = JSON.parse(localStorage.getItem('campuskart_user'));
+    const helpForm = document.getElementById("helpForm");
+    const fileInput = document.getElementById("fileInput");
+    const fileLabelText = document.getElementById("file-label-text");
+    fileInput.addEventListener('change', function() {
+      if (this.files.length > 0) {
+        fileLabelText.textContent = this.files[0].name;
+      } else {
+        fileLabelText.textContent = "Upload Project Image (Optional)";
+      }
+    });
+
+    helpForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(helpForm);
+      formData.append('user', user.name);
+      
+      const submitBtn = helpForm.querySelector('button');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...';
+      submitBtn.disabled = true;
+      
+      try {
+        const res = await fetch('/api/helps/add', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (res.ok) {
+          helpForm.reset();
+          fileLabelText.textContent = "Upload Project Image (Optional)";
+          loadHelp();
+        }
+      } catch (err) {
+        console.error("Error:", err);
+      } finally {
+        submitBtn.innerHTML = '<i class="fas fa-bullhorn"></i> Post Request';
+        submitBtn.disabled = false;
+      }
+    };
+
+    async function loadHelp() {
+      try {
+        const res = await fetch('/api/helps/all');
+        const data = await res.json();
+
+        const search = document.getElementById("helpSearch").value.toLowerCase();
+        const filtered = data.filter(h =>
+          (!search ||
+            (h.title && h.title.toLowerCase().includes(search)) ||
+            (h.college && h.college.toLowerCase().includes(search)))
+        );
+
+        if (filtered.length === 0) {
+          document.getElementById("helpList").innerHTML = `
+            <div class="no-results">
+              <i class="fas fa-search"></i>
+              <p>No matching requests found. Be the first to post!</p>
+            </div>
+          `;
+          return;
+        }
+
+        document.getElementById("helpList").innerHTML = filtered.map(h => `
+          <div class="card">
+            ${h.image ? `<img src="/uploads/${h.image}" class="card-img" alt="${h.title || 'Project image'}">` : ''}
+            <div class="card-content">
+              <h3>${h.title || 'Untitled Project'}</h3>
+              <span class="card-college"><i class="fas fa-university"></i> ${h.college || 'Unknown College'}</span>
+              <p>${h.description || 'No description provided'}</p>
+              <div class="card-user">
+                <i class="fas fa-user"></i> Posted by ${h.user || 'Anonymous'}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error("Error loading requests:", err);
+        document.getElementById("helpList").innerHTML = `
+          <div class="no-results">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Error loading requests. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById("helpSearch").addEventListener('input', loadHelp);
+    loadHelp();
+  </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Profile - CampusKart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6e00ff;
+      --primary-light: #a17aff;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --success: #00c853;
+      --danger: #ff1744;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    #navbar {
+      margin-bottom: 20px;
+    }
+
+    .profile-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .profile-header h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      margin-left: 15px;
+    }
+
+    .profile-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(110, 0, 255, 0.1);
+      outline: none;
+    }
+
+    .form-input:disabled {
+      background: #f9f9f9;
+      color: #777;
+    }
+
+    .save-btn {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(110, 0, 255, 0.2);
+    }
+
+    .save-btn:active {
+      transform: translateY(0);
+    }
+
+    .status-msg {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+    }
+
+    .success {
+      background: rgba(0, 200, 83, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(0, 200, 83, 0.2);
+      display: block;
+    }
+
+    .error {
+      background: rgba(255, 23, 68, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(255, 23, 68, 0.2);
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .profile-container {
+        padding: 20px;
+      }
+      
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .profile-header h2 {
+        margin: 15px 0 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar" id="userAvatar">JD</div>
+      <h2>Edit Profile</h2>
+    </div>
+
+    <div class="profile-card">
+      <form id="profileForm">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" name="name" class="form-input" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-input" disabled>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Mobile Number</label>
+          <input type="tel" name="phone" class="form-input" placeholder="Enter mobile number" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <select name="role" class="form-input" required>
+            <option value="">Select your role</option>
+            <option value="Student">Student</option>
+            <option value="Faculty">Faculty</option>
+            <option value="Staff">Staff</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">College</label>
+          <input type="text" name="college" class="form-input" placeholder="Enter your college" list="collegeList" required>
+          <datalist id="collegeList">
+            <option value="IIIT Bhagalpur">
+            <option value="IIT Bombay">
+            <option value="IIT Patna">
+            <option value="IIT Madras">
+            <option value="IIT Kanpur">
+            <option value="IIT Delhi">
+              
+          </datalist>
+        </div>
+
+        <button type="submit" class="save-btn">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+        
+        <div id="saveMsg" class="status-msg"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    fetch('navbar.html')
+      .then(res => res.text())
+      .then(data => document.getElementById('navbar').innerHTML = data);
+
+    const user = JSON.parse(localStorage.getItem('campuskart_user'));
+    if (!user) {
+      window.location.href = 'auth.html';
+    }
+
+    const avatar = document.getElementById('userAvatar');
+    const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+    avatar.textContent = initials;
+
+    const form = document.getElementById('profileForm');
+    form.name.value = user.name || '';
+    form.email.value = user.email || '';
+    form.phone.value = user.phone || '';
+    form.role.value = user.role || '';
+    form.college.value = user.college || '';
+
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const saveBtn = form.querySelector('button');
+      const originalText = saveBtn.innerHTML;
+      saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+      saveBtn.disabled = true;
+
+      
+      setTimeout(() => {
+        const updatedUser = {
+          ...user,
+          name: form.name.value,
+          phone: form.phone.value,
+          role: form.role.value,
+          college: form.college.value
+        };
+        
+        localStorage.setItem('campuskart_user', JSON.stringify(updatedUser));
+        
+       
+        const newInitials = updatedUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+        avatar.textContent = newInitials;
+        
+        
+        const msg = document.getElementById('saveMsg');
+        msg.textContent = 'Profile updated successfully!';
+        msg.className = 'status-msg success';
+
+        saveBtn.innerHTML = originalText;
+        saveBtn.disabled = false;
+        
+
+        setTimeout(() => {
+          msg.style.opacity = '0';
+          setTimeout(() => msg.style.display = 'none', 300);
+        }, 3000);
+      }, 1000);
+    };
+  </script>
+</body>
+</html>
